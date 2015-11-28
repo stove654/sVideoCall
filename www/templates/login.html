@@ -1,0 +1,79 @@
+<ion-view>
+    <ion-content class="login-page" scroll="false" horizontal layout>
+        <div flex class="slide-form balanced-bg" vertical layout>
+            <div horizontal layout center-justified center class="welcome">
+                Welcome to stove <i class="ion-happy-outline"></i>
+            </div>
+            <div flex style="position: relative">
+                <ion-slide-box on-slide-changed="slideHasChanged($index)">
+                    <ion-slide>
+                        <div class="box">
+                            <img src="./img/39970046984947.5607ee014dc83.png" alt=""/>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="box">
+                            <img src="./img/39970046984947.5607ee014dc83.png" alt=""/>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="box">
+                            <img src="./img/39970046984947.5607ee014dc83.png" alt=""/>
+                        </div>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </div>
+        <div class="login-form" vertical layout>
+            <div class="title-login">
+                <span class="active">Sign In</span>
+                <span class="pull-right">Sign Up</span>
+            </div>
+            <div class="padding-8" flex>
+                <form name="formLogin" ng-submit="login()">
+                    <div class="input-login padding-8">
+                        <input type="text" placeholder="Email" ng-model="data.user.email" required/>
+                    </div>
+                    <div class="input-login padding-8">
+                        <input type="password" placeholder="Password" ng-model="data.user.password" required/>
+                    </div>
+                    <div class="padding-8 button-login">
+                        <button class="button button-light" ng-disabled="!formLogin.$valid">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+                <div class="padding-8 text-center">
+                    Forgot Password?
+                </div>
+            </div>
+            <div class="padding-8 social-login">
+
+                <div class="padding-8 button-login">
+                    <button class="button button-positive">
+                        <i class="ion-social-facebook-outline"></i> Facebook
+                    </button>
+                </div>
+
+                <div class="padding-8 button-login">
+                    <button class="button button-positive">
+                        <i class="ion-social-instagram-outline"></i> Instagram
+                    </button>
+                </div>
+
+                <div class="padding-8 button-login">
+                    <button class="button button-positive">
+                        <i class="ion-social-googleplus-outline"></i> Google
+                    </button>
+                </div>
+
+                <div class="padding-8 button-login">
+                    <button class="button button-positive">
+                        <i class="ion-social-twitter-outline"></i> Twitter
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,24 @@
+
+{
+  "main": "index.html",
+  "name": "sVideoCall",
+  "description": "sVideoCall",
+  "version": "0.1.0",
+  "keywords": [ "sVideoCall" ],
+  "window": {
+    "title": "sVideoCall",
+    "toolbar": false,
+    "frame": true,
+    "width": 960,
+    "height": 640,
+    "position": "center",
+    "min_width": 960,
+    "min_height": 640
+  },
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+    "deck":"latest"
+  }
+}
