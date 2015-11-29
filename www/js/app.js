@@ -11,7 +11,9 @@ angular.module('starter', [
   'ngCordovaOauth',
   'LocalStorageModule',
   'pascalprecht.translate',
-  'toaster'
+  'toaster',
+  'ui.bootstrap',
+  'satellizer'
 ])
 
   .run(function ($ionicPlatform) {
@@ -30,7 +32,7 @@ angular.module('starter', [
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $authProvider) {
     $stateProvider
 
       .state('login', {
@@ -67,4 +69,26 @@ angular.module('starter', [
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
+
+    $authProvider.httpInterceptor = function() { return true; },
+      $authProvider.withCredentials = true;
+    $authProvider.tokenRoot = null;
+    $authProvider.cordova = false;
+    $authProvider.baseUrl = '/';
+    $authProvider.loginUrl = '/auth/login';
+    $authProvider.signupUrl = '/auth/signup';
+    $authProvider.unlinkUrl = '/auth/unlink/';
+    $authProvider.tokenName = 'token';
+    $authProvider.tokenPrefix = 'satellizer';
+    $authProvider.authHeader = 'Authorization';
+    $authProvider.authToken = 'Bearer';
+    $authProvider.storageType = 'localStorage';
+
+// Facebook
+    $authProvider.facebook({
+      redirectUri: 'http://localhost:8100',
+      clientId: '895357913876223'
+    });
+
+
   });

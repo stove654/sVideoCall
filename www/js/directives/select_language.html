@@ -1,0 +1,11 @@
+<div class="lang-select" dropdown is-open="lg.isOpen">
+    <div class="dropdown-toggle" dropdown-toggle>
+        <img ng-src="{{selectedLang.img}}" width="32">
+        <b class="caret"></b>
+    </div>
+    <ul class="dropdown-menu right">
+        <li ng-repeat="lang in locales">
+            <a ng-click="selectLangId(lang)"><img ng-src="{{lang.img}}" width="24" class="m-r-sm">{{lang.name}}</a>
+        </li>
+    </ul>
+</div>

@@ -7,7 +7,6 @@
   font-weight: 600;
   font-size: 16px;
   border-bottom: 1px solid #ddd;
-  overflow: hidden;
 }
 .login-form .title-login span {
   display: inline-block;
@@ -16,6 +15,14 @@
 }
 .login-form .title-login span.active {
   border-bottom: 2px solid #45BB67;
+}
+.login-form .title-login .dropdown-menu > li > a {
+  padding: 10px 20px;
+}
+.login-form .title-login .dropdown-menu > li > a img {
+  margin-right: 10px;
+  position: relative;
+  top: 3px;
 }
 .balanced-bg {
   background-color: #45BB67;

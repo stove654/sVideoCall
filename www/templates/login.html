@@ -2,7 +2,7 @@
     <ion-content class="login-page" scroll="false" horizontal layout>
         <div flex class="slide-form balanced-bg" vertical layout>
             <div horizontal layout center-justified center class="welcome">
-                Welcome to stove <i class="ion-happy-outline"></i>
+                <span translate="WELCOME"></span> <i class="ion-happy-outline"></i>
             </div>
             <div flex style="position: relative">
                 <ion-slide-box on-slide-changed="slideHasChanged($index)">
@@ -26,31 +26,65 @@
         </div>
         <div class="login-form" vertical layout>
             <div class="title-login">
-                <span class="active">Sign In</span>
-                <span class="pull-right">Sign Up</span>
+                <span translate="SIGNIN" ng-class="{active: data.view == 1}" ng-click="viewLogin(1)"></span>
+                <select-language class="pull-right" style="padding: 14px"></select-language>
+                <span class="pull-right" translate="SIGNUP" ng-class="{active: data.view == 2}" ng-click="viewLogin(2)"></span>
             </div>
             <div class="padding-8" flex>
-                <form name="formLogin" ng-submit="login()">
-                    <div class="input-login padding-8">
-                        <input type="text" placeholder="Email" ng-model="data.user.email" required/>
+                <div ng-if="data.view == 1">
+
+
+                    <form name="formLogin" ng-submit="login()">
+                        <div class="input-login padding-8">
+                            <input type="text" placeholder="{{'EMAIL' | translate}}" ng-model="data.user.email" required/>
+                        </div>
+                        <div class="input-login padding-8">
+                            <input type="password" placeholder="{{'PASSWORD' | translate}}" ng-model="data.user.password" required/>
+                        </div>
+                        <div class="padding-8 button-login">
+                            <button class="button button-light" ng-disabled="!formLogin.$valid" translate="SIGNIN">
+
+                            </button>
+                        </div>
+                    </form>
+                    <div class="padding-8 text-center" ng-click="viewLogin(3)" translate="FORGOT_PASSWORD">
+
                     </div>
-                    <div class="input-login padding-8">
-                        <input type="password" placeholder="Password" ng-model="data.user.password" required/>
-                    </div>
-                    <div class="padding-8 button-login">
-                        <button class="button button-light" ng-disabled="!formLogin.$valid">
-                            Sign In
-                        </button>
-                    </div>
-                </form>
-                <div class="padding-8 text-center">
-                    Forgot Password?
                 </div>
+                <div ng-if="data.view == 2">
+                    <form name="formSignUp" ng-submit="signUp()">
+                        <div class="input-login padding-8">
+                            <input type="text" placeholder="{{'EMAIL' | translate}}" ng-model="data.newUser.email" required/>
+                        </div>
+                        <div class="input-login padding-8">
+                            <input type="password" placeholder="{{'PASSWORD' | translate}}" ng-model="data.newUser.password" required/>
+                        </div>
+                        <div class="padding-8 button-login">
+                            <button class="button button-light" ng-disabled="!formSignUp.$valid" translate="SIGNUP">
+
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div ng-if="data.view == 3">
+                    <form name="formForgot" ng-submit="forGotMail()">
+                        <div class="input-login padding-8">
+                            <input type="text" placeholder="{{'EMAIL' | translate}}" ng-model="data.forgot.email" required/>
+                        </div>
+                        <div class="padding-8 button-login">
+                            <button class="button button-light" ng-disabled="!formForgot.$valid" translate="RESET_PASS">
+
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             <div class="padding-8 social-login">
 
                 <div class="padding-8 button-login">
-                    <button class="button button-positive">
+                    <button class="button button-positive" ng-click="login('facebook')">
                         <i class="ion-social-facebook-outline"></i> Facebook
                     </button>
                 </div>
