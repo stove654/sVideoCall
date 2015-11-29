@@ -1,6 +1,6 @@
 angular.module('starter')
 
-  .controller('LoginCtrl', function ($scope, $auth, $ionicPopup) {
+  .controller('LoginCtrl', function ($scope, $http, APP_CONFIG, localStorageService, $state) {
 
     /*
     * id view
@@ -25,10 +25,20 @@ angular.module('starter')
 
     $scope.signUp = function () {
       console.log('dang ky');
-    }
+      $http.post(APP_CONFIG.baseUrl + 'users', $scope.data.newUser).then(function (response) {
+        console.log(response)
+      }, function (err) {
+        console.log(err)
+      });
+    };
 
     $scope.login = function () {
-
+      $http.post(APP_CONFIG.url + 'auth/local', $scope.data.user).then(function (response) {
+        localStorageService.set('stoveCurrentUser', response.data);
+        $state.go('app.home')
+      }, function (err) {
+        console.log(err)
+      });
     }
 
   });

@@ -5,7 +5,7 @@
 }
 .login-form .title-login {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   border-bottom: 1px solid #ddd;
 }
 .login-form .title-login span {
@@ -91,4 +91,18 @@
 .social-login .button-login:nth-child(3) button {
   background-color: #125688;
   border-color: #125688;
+}
+#loading-bar .bar {
+  padding: 0;
+}
+.sidebar-right {
+  z-index: 100 !important;
+  left: 0;
+}
+.content-app {
+  z-index: 90;
+  padding-left: 275px;
+}
+.bar-view {
+  padding-left: 275px;
 }

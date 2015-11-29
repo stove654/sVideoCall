@@ -13,10 +13,38 @@ angular.module('starter', [
   'pascalprecht.translate',
   'toaster',
   'ui.bootstrap',
-  'satellizer'
+  'satellizer',
+  'angular-loading-bar'
 ])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, $rootScope, $state, $location, SessionService) {
+
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+
+      var shouldLogin = toState.data !== undefined
+        && toState.data.requireLogin
+        && !SessionService.isToken().isLoggedIn ;
+
+      // NOT authenticated - wants any private stuff
+      if(shouldLogin)
+      {
+        $state.go('login');
+        event.preventDefault();
+        return;
+      }
+
+      // authenticated (previously) comming not to root main
+      if(SessionService.isToken().isLoggedIn)
+      {
+        var shouldGoToMain = fromState.name === ""
+          && toState.name !== "main.home" ;
+        return;
+      }
+
+    });
+
+
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -32,7 +60,7 @@ angular.module('starter', [
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, $authProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $authProvider, $httpProvider) {
     $stateProvider
 
       .state('login', {
@@ -48,30 +76,22 @@ angular.module('starter', [
         controller: 'AppCtrl'
       })
 
-      .state('app.playlists', {
-        url: '/playlists',
+      .state('app.home', {
+        url: '/home',
         views: {
           'menuContent': {
-            templateUrl: 'templates/playlists.html',
-            controller: 'PlaylistsCtrl'
+            templateUrl: 'templates/states/home.html',
+            controller: 'HomeCtrl'
           }
-        }
+        },
+        data : {requireLogin : true }
       })
 
-      .state('app.single', {
-        url: '/playlists/:playlistId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/playlist.html',
-            controller: 'PlaylistCtrl'
-          }
-        }
-      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 
-    $authProvider.httpInterceptor = function() { return true; },
-      $authProvider.withCredentials = true;
+    $authProvider.httpInterceptor = function() { return true; };
+    $authProvider.withCredentials = true;
     $authProvider.tokenRoot = null;
     $authProvider.cordova = false;
     $authProvider.baseUrl = '/';
@@ -84,6 +104,12 @@ angular.module('starter', [
     $authProvider.authToken = 'Bearer';
     $authProvider.storageType = 'localStorage';
 
+    // Use x-www-form-urlencoded Content-Type
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+    $httpProvider.defaults.headers.put['Content-Type'] = 'application/json';
+    $httpProvider.defaults.headers.common['Content-Type'] = $httpProvider.defaults.headers.post['Content-Type'];
+    $httpProvider.interceptors.push('loaderInterceptor');
+
 // Facebook
     $authProvider.facebook({
       redirectUri: 'http://localhost:8100',
@@ -91,4 +117,32 @@ angular.module('starter', [
     });
 
 
-  });
+  })
+
+  .factory('loaderInterceptor', function($rootScope, $q, $location, localStorageService, $injector, cfpLoadingBar) {
+    return {
+      'request': function(config) {
+        // do something on success
+        cfpLoadingBar.start();
+        return config;
+      },
+
+      // optional method
+      'response': function(response) {
+        // do something on success
+        cfpLoadingBar.complete()
+        return response;
+      },
+
+      'responseError' : function(response){
+        cfpLoadingBar.complete()
+        if (response.status == 401) {
+          var state = $injector.get('$state');
+          localStorageService.remove('stoveCurrentUser');
+          state.go('login');
+        }
+        return $q.reject(response);
+      }
+    };
+
+  })

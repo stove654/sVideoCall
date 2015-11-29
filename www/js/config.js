@@ -7,5 +7,7 @@
 angular.module('starter')
   .constant("APP_CONFIG", {
     appFacebookId: 895357913876223,
-    appFacebookName: "easy restaurant"
+    appFacebookName: "easy restaurant",
+    url: "http://localhost:8080/",
+    baseUrl: "http://localhost:8080/api/"
   });

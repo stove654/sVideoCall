@@ -12,6 +12,7 @@
     "AngularJS-Toaster": "angularjs-toaster#~0.4.16",
     "satellizer": "~0.13.1",
     "bootstrap": "~3.3.6",
-    "angular-bootstrap": "~0.14.3"
+    "angular-bootstrap": "~0.14.3",
+    "angular-loading-bar": "~0.8.0"
   }
 }
